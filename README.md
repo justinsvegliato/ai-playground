@@ -1,1 +1,1 @@
-# ai-playground
+# tic-tac-toe-agent
