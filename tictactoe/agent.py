@@ -38,10 +38,10 @@ def get_next_move(action_value_map, remaining_moves):
 
 def get_reward(winner, player):
     if winner is None:
-        return 1
+        return 3
 
     if winner == player:
-        return 2
+        return 4
 
     return 0
 
@@ -66,7 +66,7 @@ def train():
     draw_count = 0
 
     for i in range(1, GAME_COUNT + 1):
-        print "Game " + str(i)
+        print "Playing game " + str(i) + "..."
 
         (first_player, second_player) = (tictactoe.FIRST_PLAYER, tictactoe.SECOND_PLAYER)
         first_player_moves = []
@@ -78,11 +78,7 @@ def train():
         while not tictactoe.is_game_over(board):
             first_player_move = get_next_move(first_player_action_value_map, tictactoe.get_available_moves(board))
             first_player_moves.append(first_player_move)
-
             tictactoe.move(board, first_player_move[0], first_player_move[1], first_player)
-
-            print "First Player: "
-            tictactoe.display_board(board)
 
             if tictactoe.has_won(board, first_player):
                 winner = first_player
@@ -95,11 +91,7 @@ def train():
 
             second_player_move = get_next_move(second_player_action_value_map, tictactoe.get_available_moves(board))
             second_player_moves.append(second_player_move)
-
             tictactoe.move(board, second_player_move[0], second_player_move[1], second_player)
-
-            print "Second Player: "
-            tictactoe.display_board(board)
 
             if tictactoe.has_won(board, second_player):
                 winner = second_player
@@ -110,8 +102,6 @@ def train():
         update_action_value_map(second_player_action_value_map, second_player_moves, second_player, winner, i)
 
     print "Summary: "
-    print "First Player Action-Value Map: " + str(first_player_action_value_map)
-    print "Second Player Action-Value Map: " + str(second_player_action_value_map)
     print "First Player Wins: " + str(first_player_win_count)
     print "Second Player Wins: " + str(second_player_win_count)
     print "Draws: " + str(draw_count)
