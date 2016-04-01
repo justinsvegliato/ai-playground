@@ -10,6 +10,9 @@ PLAYER_SYMBOLS = ["-", "X", "O"]
 def get_empty_board():
     return np.matrix("0, 0, 0; 0, 0, 0; 0, 0, 0")
 
+def get_board_copy(board):
+    return np.copy(board)
+
 def get_board_size(board):
     return len(board)
 
@@ -52,6 +55,16 @@ def display_board(board):
         for y in range(size):
             print PLAYER_SYMBOLS[board[x, y]],
         print ""
+
+def get_string_representation(board):
+    size = get_board_size(board)
+
+    representation = "";
+    for x in range(size):
+        for y in range(size):
+            representation += str(board[x, y])
+
+    return representation
 
 def get_players():
     human_player = random.choice([FIRST_PLAYER, SECOND_PLAYER])

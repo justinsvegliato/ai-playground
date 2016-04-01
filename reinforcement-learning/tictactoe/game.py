@@ -1,9 +1,9 @@
 import tictactoe
-import agent
+import smart_agent
 
 def main():
     print "The computer is learning how to play! Please wait a moment."
-    (first_player_action_value_map, second_player_action_value_map) = agent.train()
+    (first_player_action_value_map, second_player_action_value_map) = smart_agent.train()
 
     is_playing = True
 
@@ -32,7 +32,7 @@ def main():
                 print "There was a draw!"
                 break;
 
-            computer_move = agent.get_best_move(computer_action_value_map, tictactoe.get_available_moves(board))
+            computer_move = smart_agent.get_best_move(computer_action_value_map, board, computer_player, tictactoe.get_available_moves(board))
             tictactoe.move(board, computer_move[0], computer_move[1], computer_player)
 
             print "The computer has moved: %s, %s" % (computer_move[0], computer_move[1])

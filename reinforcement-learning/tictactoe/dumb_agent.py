@@ -33,8 +33,8 @@ def get_available_action_value_map(action_value_map, available_moves):
 
     return available_action_value_map
 
-def get_next_move(action_value_map, remaining_moves):
-    return random.choice(remaining_moves) if random.random() <= EPSILON else get_best_move(action_value_map, remaining_moves)
+def get_next_move(action_value_map, available_moves):
+    return random.choice(available_moves) if random.random() <= EPSILON else get_best_move(action_value_map, available_moves)
 
 def get_reward(winner, player):
     if winner is None:
@@ -45,14 +45,14 @@ def get_reward(winner, player):
 
     return 0
 
-def update_action_value_map(action_value_map, moves, player, winner, games_count):
+def update_action_value_map(action_value_map, moves, player, winner, game_count):
     for move in moves:
         key = get_move_key(move)
 
-        old_wins_count = action_value_map[key] * (games_count - 1)
+        old_win_count = action_value_map[key] * (game_count - 1)
         reward = get_reward(winner, player)
 
-        action_value_map[key] = (old_wins_count + reward) / games_count
+        action_value_map[key] = (old_win_count + reward) / game_count
 
 def get_move_key(move):
     return str(move[0]) + MOVE_DELIMITER + str(move[1])
