@@ -48,7 +48,6 @@ def get_initial_state_value_map():
 
     return state_value_map
 
-
 def train():
     first_player_state_value_map = get_initial_state_value_map()
     second_player_state_value_map = get_initial_state_value_map()
