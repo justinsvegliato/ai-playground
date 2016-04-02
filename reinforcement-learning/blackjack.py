@@ -16,7 +16,7 @@ def get_total_value(hand):
 def add_card(hand, card):
     val, ace = hand
     ace = True if card == 1 else ace
-    return (val + card, ace)
+    return val + card, ace
 
 def evaluate_dealer(dealer_hand):
     while get_total_value(dealer_hand) < 17:
@@ -57,7 +57,7 @@ def play(state, decision):
         player_total = get_total_value(player_hand)
         status = get_player_status(dealer_total, player_total)
 
-    return (player_hand, dealer_hand, status)
+    return player_hand, dealer_hand, status
 
 def initialize_game():
     player_hand = add_card((0, False), get_random_card())
@@ -69,4 +69,4 @@ def initialize_game():
 
     status = get_player_status(dealer_total, player_total)
 
-    return (player_hand, dealer_hand, status)
+    return player_hand, dealer_hand, status
