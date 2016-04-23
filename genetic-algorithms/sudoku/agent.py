@@ -1,5 +1,6 @@
 import sudoku
 import random
+import sys
 
 POPULATION_SIZE = 300
 GENERATIONS = 100000
@@ -26,7 +27,6 @@ def get_initial_population(initial_puzzle, capacity):
 
     for puzzle_id in range(capacity):
         puzzle = initial_puzzle
-
         for row_id, column_id in sudoku.get_empty_cells(initial_puzzle):
             value = get_cell_value(puzzle, row_id, column_id)
             puzzle = sudoku.set_cell(puzzle, row_id, column_id, value)
@@ -86,8 +86,11 @@ def get_highest_fitness_score(population):
     return max(enriched_population, key=lambda x:x[1])[1]
 
 def main():
-    initial_puzzle = sudoku.load_puzzle("easy_puzzle_1.csv")
+    if len(sys.argv) < 2:
+        print "Usage: python agent.py file"
+        sys.exit()
 
+    initial_puzzle = sudoku.load_puzzle(sys.argv[1])
     population = get_initial_population(initial_puzzle, POPULATION_SIZE)
 
     for generation in range(GENERATIONS):
@@ -95,12 +98,10 @@ def main():
             break
 
         new_population = get_elite_members(population, ELITE_MEMBER_COUNT)
-
         for i in range(POPULATION_SIZE - ELITE_MEMBER_COUNT):
             puzzle = random.choice(population)
             mutated_puzzle = get_mutated_puzzle(initial_puzzle, puzzle)
             new_population.append(mutated_puzzle)
-
         population = new_population
 
         print "Generation %d's Fitness Score: %d" % (generation, get_highest_fitness_score(population))
