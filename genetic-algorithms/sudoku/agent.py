@@ -1,10 +1,10 @@
 import sudoku
 import random
 
-POPULATION_SIZE = 30
+POPULATION_SIZE = 300
 GENERATIONS = 100000
 ELITE_MEMBER_COUNT = 5
-MUTATION_LIMIT = 10
+MUTATION_LIMIT = 15
 
 def get_fitness_score(puzzle):
     fitness_score = 0
@@ -86,7 +86,7 @@ def get_highest_fitness_score(population):
     return max(enriched_population, key=lambda x:x[1])[1]
 
 def main():
-    initial_puzzle = sudoku.load_puzzle("easy_puzzle_2.csv")
+    initial_puzzle = sudoku.load_puzzle("easy_puzzle_1.csv")
 
     population = get_initial_population(initial_puzzle, POPULATION_SIZE)
 

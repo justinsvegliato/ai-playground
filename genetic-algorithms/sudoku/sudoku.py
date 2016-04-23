@@ -21,8 +21,12 @@ def get_row(puzzle, row_id):
 
 def get_square(puzzle, square_id):
     start_row_id = (square_id // SQUARE_SIZE) * SQUARE_SIZE
+    end_row_id = start_row_id + SQUARE_SIZE
+
     start_column_id = (square_id % SQUARE_SIZE) * SQUARE_SIZE
-    return puzzle[start_row_id:start_row_id + SQUARE_SIZE, start_column_id:start_column_id + SQUARE_SIZE]
+    end_column_id = start_column_id + SQUARE_SIZE
+
+    return puzzle[start_row_id:end_row_id, start_column_id:end_column_id]
 
 def is_row_valid(puzzle, row_id):
     return set(DIGITS) == set(get_row(puzzle, row_id))
