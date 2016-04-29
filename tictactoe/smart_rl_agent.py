@@ -4,7 +4,7 @@ import itertools
 
 EPSILON = 0.2
 INITIAL_WIN_PROBABILITY = 0.5
-GAME_COUNT = 10000
+GAME_COUNT = 100
 
 def get_best_move(state_value_map, board, player, available_moves):
     best_move = None
@@ -75,7 +75,7 @@ def train():
     for i in range(1, GAME_COUNT + 1):
         print "Playing game " + str(i) + "..."
 
-        (first_player, second_player) = (tictactoe.FIRST_PLAYER, tictactoe.SECOND_PLAYER)
+        first_player, second_player = tictactoe.FIRST_PLAYER, tictactoe.SECOND_PLAYER
         first_player_boards = []
         second_player_boards = []
 
@@ -84,30 +84,30 @@ def train():
 
         while not tictactoe.is_game_over(board):
             first_player_move = get_next_move(first_player_state_value_map, board, first_player, tictactoe.get_available_moves(board))
-            tictactoe.move(board, first_player_move[0], first_player_move[1], first_player)
+            board = tictactoe.move(board, first_player_move[0], first_player_move[1], first_player)
             first_player_boards.append(board)
 
             if tictactoe.has_won(board, first_player):
                 winner = first_player
                 first_player_win_count += 1
-                break;
+                break
 
             if tictactoe.is_game_over(board):
                 draw_count += 1
-                break;
+                break
 
             second_player_move = get_next_move(second_player_state_value_map, board, second_player, tictactoe.get_available_moves(board))
-            tictactoe.move(board, second_player_move[0], second_player_move[1], second_player)
+            board = tictactoe.move(board, second_player_move[0], second_player_move[1], second_player)
             second_player_boards.append(board)
 
             if tictactoe.has_won(board, second_player):
                 winner = second_player
                 second_player_win_count += 1
-                break;
+                break
 
             if tictactoe.is_game_over(board):
                 draw_count += 1
-                break;
+                break
 
         update_state_value_map(first_player_state_value_map, first_player_boards, first_player, winner, i)
         update_state_value_map(second_player_state_value_map, second_player_boards, second_player, winner, i)

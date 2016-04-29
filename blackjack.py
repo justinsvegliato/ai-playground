@@ -1,4 +1,3 @@
-import math
 import random
 
 def get_random_card():

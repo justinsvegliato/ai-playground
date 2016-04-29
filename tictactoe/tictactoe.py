@@ -16,6 +16,9 @@ def get_board_copy(board):
 def get_board_size(board):
     return len(board)
 
+def get_opponent(player):
+    return SECOND_PLAYER if player == FIRST_PLAYER else FIRST_PLAYER
+
 def get_available_moves(board):
     size = get_board_size(board)
 
@@ -28,7 +31,9 @@ def get_available_moves(board):
     return moves
 
 def move(board, x, y, player):
-    board[x, y] = player
+    board_copy = get_board_copy(board)
+    board_copy[x, y] = player
+    return board_copy
 
 def has_won(board, player):
     size = get_board_size(board)

@@ -68,7 +68,7 @@ def train():
     for i in range(1, GAME_COUNT + 1):
         print "Playing game " + str(i) + "..."
 
-        (first_player, second_player) = (tictactoe.FIRST_PLAYER, tictactoe.SECOND_PLAYER)
+        first_player, second_player = tictactoe.FIRST_PLAYER, tictactoe.SECOND_PLAYER
         first_player_moves = []
         second_player_moves = []
 
@@ -83,11 +83,11 @@ def train():
             if tictactoe.has_won(board, first_player):
                 winner = first_player
                 first_player_win_count += 1
-                break;
+                break
 
             if tictactoe.is_game_over(board):
                 draw_count += 1
-                break;
+                break
 
             second_player_move = get_next_move(second_player_action_value_map, tictactoe.get_available_moves(board))
             second_player_moves.append(second_player_move)
@@ -96,7 +96,7 @@ def train():
             if tictactoe.has_won(board, second_player):
                 winner = second_player
                 second_player_win_count += 1
-                break;
+                break
 
         update_action_value_map(first_player_action_value_map, first_player_moves, first_player, winner, i)
         update_action_value_map(second_player_action_value_map, second_player_moves, second_player, winner, i)

@@ -38,26 +38,29 @@ def train_neural_network(cost_function):
         if i % ITERATION_CHECK_POINT == 0:
             print "Current Cost: %f" % (cost,)
 
-# Create the parameters of our functions
-inputs = T.dvector()
-output = T.dscalar()
+def main():
+    # Create the parameters of our functions
+    inputs = T.dvector()
+    output = T.dscalar()
 
-# Create the variables that represents the neural network weights
-hidden_layer_weights = theano.shared(np.array(np.random.rand(3, 3), dtype=theano.config.floatX)) 
-output_layer_weights = theano.shared(np.array(np.random.rand(4, 1), dtype=theano.config.floatX))
+    # Create the variables that represents the neural network weights
+    hidden_layer_weights = theano.shared(np.array(np.random.rand(3, 3), dtype=theano.config.floatX))
+    output_layer_weights = theano.shared(np.array(np.random.rand(4, 1), dtype=theano.config.floatX))
 
-# Create a function that represents the neural network
-hidden_layer_activations = get_activation_values(inputs, hidden_layer_weights) 
-output_layer_value = T.sum(get_activation_values(hidden_layer_activations, output_layer_weights)) 
-feed_forward = theano.function(inputs=[inputs], outputs=output_layer_value)
+    # Create a function that represents the neural network
+    hidden_layer_activations = get_activation_values(inputs, hidden_layer_weights)
+    output_layer_value = T.sum(get_activation_values(hidden_layer_activations, output_layer_weights))
+    feed_forward = theano.function(inputs=[inputs], outputs=output_layer_value)
 
-# Create a function that represents the cost function
-cost = (output_layer_value - output)**2
-cost_function = theano.function(inputs=[inputs, output], outputs=cost, updates=[
-    (hidden_layer_weights, get_gradient(cost, hidden_layer_weights)),
-    (output_layer_weights, get_gradient(cost, output_layer_weights))
-])
+    # Create a function that represents the cost function
+    cost = (output_layer_value - output)**2
+    cost_function = theano.function(inputs=[inputs, output], outputs=cost, updates=[
+        (hidden_layer_weights, get_gradient(cost, hidden_layer_weights)),
+        (output_layer_weights, get_gradient(cost, output_layer_weights))
+    ])
 
-train_neural_network(cost_function)
+    train_neural_network(cost_function)
 
-display_neural_network()
+    display_neural_network()
+
+main()
