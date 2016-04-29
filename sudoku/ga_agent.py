@@ -87,7 +87,7 @@ def get_highest_fitness_score(population):
 
 def main():
     if len(sys.argv) < 2:
-        print "Usage: python minimax_agent.py file"
+        print "Usage: python ga_agent.py file"
         sys.exit()
 
     initial_puzzle = sudoku.load_puzzle(sys.argv[1])
