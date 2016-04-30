@@ -1,6 +1,6 @@
 import connect_four
 
-MAX_DEPTH = 3
+MAX_DEPTH = 4
 
 WEIGHT_MAP = [[3, 4, 5, 7, 5, 4, 3],
               [4, 6, 8, 10, 8, 6, 4],
@@ -10,12 +10,12 @@ WEIGHT_MAP = [[3, 4, 5, 7, 5, 4, 3],
               [3, 4, 5, 7, 5, 4, 3]]
 
 def get_score(board, active_player):
-    if connect_four.get_winner(board) == active_player:
-        return float("inf")
-
     opponent = connect_four.get_opponent(active_player)
     if connect_four.get_winner(board) == opponent:
         return float("-inf")
+
+    if connect_four.get_winner(board) == active_player:
+        return float("inf")
 
     score = 0
 
