@@ -1,9 +1,5 @@
 import tictactoe
 import minimax_agent
-import random
-
-def get_random_phrase(phrases):
-    return random.choice(phrases)
 
 def main():
     is_playing = True
