@@ -1,6 +1,6 @@
+from termcolor import colored
 import numpy as np
 import random
-from termcolor import colored
 
 COLUMNS = 7
 ROWS = 6
@@ -9,7 +9,13 @@ EMPTY_CELL = 0
 FIRST_PLAYER = 1
 SECOND_PLAYER = 2
 
-SYMBOLS = ["-", colored(u'\u25CF', "red"), colored(u'\u25CF', "green")]
+CIRCLE_SYMBOL = u"\u25cf"
+EMPTY_CELL_COLOR = "grey"
+FIRST_PLAYER_COLOR = "red"
+SECOND_PLAYER_COLOR = "green"
+SYMBOLS = [colored(u"\u25a0", EMPTY_CELL_COLOR),
+           colored(CIRCLE_SYMBOL, FIRST_PLAYER_COLOR),
+           colored(CIRCLE_SYMBOL, SECOND_PLAYER_COLOR)]
 
 WINNING_POSITIONS = [[(0, 0), (0, 1), (0, 2), (0, 3)],
                      [(0, 1), (0, 2), (0, 3), (0, 4)],
@@ -108,6 +114,12 @@ def move(board, player, column):
     new_board[empty_row, column] = player
 
     return new_board
+
+def is_board_full(board):
+    return len(get_available_moves(board)) == 0
+
+def is_game_over(board):
+    return get_winner(board) or is_board_full(board)
 
 def get_cell(board, row, column):
     return board[row, column]

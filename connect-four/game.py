@@ -20,7 +20,7 @@ def main():
         print "You're red, so you go first!" if human_player == connect_four.FIRST_PLAYER else "I'm red, so I go first!"
         connect_four.display_board(board)
 
-        while not connect_four.get_winner(board):
+        while not connect_four.is_game_over(board):
             if human_player == connect_four.FIRST_PLAYER or turn > 0:
                 move = int(raw_input("What's your move? "))
                 board = connect_four.move(board, human_player, move - 1)
@@ -29,7 +29,7 @@ def main():
                 print "You selected column %d." % move
                 connect_four.display_board(board)
 
-            if connect_four.get_winner(board):
+            if connect_four.is_game_over(board):
                 break
 
             print "I'm thinking..."
@@ -39,9 +39,14 @@ def main():
             clear_lines(9)
             print "I'll select column %d." % (computer_move + 1)
             connect_four.display_board(board)
+
             turn += 1
 
-        print "I win!" if connect_four.get_winner(board) == computer_player else "You win!"
+        winner = connect_four.get_winner(board)
+        if winner is None:
+            print "There was a draw!"
+        else:
+            print "I win!" if winner == computer_player else "You win!"
 
         input = raw_input("Want to play me again? ").lower()
         is_playing = input == "yes" or input == "y"
