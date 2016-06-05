@@ -28,9 +28,10 @@ print "Creating model..."
 # (1) The input layer takes into account shape by expecting a 28 * 28 matrix input. This represents the input image.
 # (2) The convolution layer applies 32 filters of size 3 * 3 with a stride of 1, which enables the model to perceive
 #     location and distance by translating the input into a higher dimensional space. Each filter (or feature map) has its
-#     own ReLU.
+#     own ReLU. We can think of the filter as moving across the image (even though we just have multiple filters). I think
+#     each filter has the same weights, but I'm not too sure yet.
 # (3) The max-pooling layer translates the input into a lower dimensional space by collapsing each 2 * 2 matrix into its
-#     max value.
+#     max value. We could also have sum-pooling too.
 # (4) The dropout layer matches the output of the max-pooling layer.
 # (5) The flatten layer simple flattens the input of the dropout layer.
 # (6) After this point, we have a normal neural network with a 128-node hidden layer, a dropout layer, and an output
