@@ -1,5 +1,5 @@
-import numpy as np
 import random
+import numpy as np
 
 GRID_SIZE = 4
 GOAL_REWARD = 1
@@ -64,7 +64,7 @@ def get_state_key(state):
     for row in np.array(state):
         for element in row:
             representation += str(element)
-    return representation 
+    return representation
 
 def display_state(state):
     for row in np.array(state):
@@ -109,4 +109,4 @@ def get_transition_probabilities(state, action):
     return [(1 - SLIP_PROBABILITY, get_successor_state(state, action)), (SLIP_PROBABILITY, state)]
 
 def get_reward(state):
-    return GOAL_REWARD if np.array_equal(state, get_goal_state()) else NON_GOAL_REWARD 
+    return GOAL_REWARD if np.array_equal(state, get_goal_state()) else NON_GOAL_REWARD

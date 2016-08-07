@@ -1,13 +1,13 @@
 from solvers import value_iteration, policy_iteration
 
-class VI:
+class VI(object):
     def __init__(self, epsilon=0.01):
         self.epsilon = epsilon
 
     def solve(self, mdp):
         return value_iteration(mdp, self.epsilon)
 
-class PI:
+class PI(object):
     def __init__(self, iterations=20):
         self.iterations = iterations
 
@@ -19,8 +19,9 @@ SOLVERS = {
     'pi': PI
 }
 
-class MDP:
-    def __init__(self, states, get_actions, get_transition_probabilities, get_reward, get_state_key, gamma=0.9):
+class MDP(object):
+    def __init__(self, states, get_actions, get_transition_probabilities,
+                 get_reward, get_state_key, gamma=0.9):
         self.states = states
         self.get_actions = get_actions
         self.get_transition_probabilities = get_transition_probabilities
@@ -31,4 +32,5 @@ class MDP:
     def solve(self, solver='vi'):
         if isinstance(solver, basestring):
             solver = SOLVERS[solver]()
+
         return solver.solve(self)
