@@ -8,7 +8,7 @@ class VI(object):
         return value_iteration(mdp, self.epsilon)
 
 class PI(object):
-    def __init__(self, iterations=20):
+    def __init__(self, iterations=30):
         self.iterations = iterations
 
     def solve(self, mdp):
@@ -20,8 +20,7 @@ SOLVERS = {
 }
 
 class MDP(object):
-    def __init__(self, states, get_actions, get_transition_probabilities,
-                 get_reward, get_state_key, gamma=0.9):
+    def __init__(self, states, get_actions, get_transition_probabilities, get_reward, get_state_key, gamma=0.9):
         self.states = states
         self.get_actions = get_actions
         self.get_transition_probabilities = get_transition_probabilities

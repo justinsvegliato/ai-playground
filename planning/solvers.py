@@ -51,8 +51,8 @@ def get_best_policy(mdp, values):
     policy = {}
     for state in mdp.states:
         state_key = mdp.get_state_key(state)
-        get_action_value = lambda action: get_expected_value(mdp, action, state, values)
-        policy[state_key] = argmax(mdp.get_actions(state), get_action_value)
+        get_value = lambda action: get_expected_value(mdp, action, state, values)
+        policy[state_key] = argmax(mdp.get_actions(state), get_value)
     return policy
 
 def get_expected_value(mdp, action, state, values):
@@ -90,8 +90,8 @@ def policy_iteration(mdp, iterations):
         has_policy_changed = False
         for state in mdp.states:
             state_key = mdp.get_state_key(state)
-            get_action_value = lambda action: get_expected_value(mdp, action, state, values)
-            action = argmax(mdp.get_actions(state), get_action_value)
+            get_value = lambda action: get_expected_value(mdp, action, state, values)
+            action = argmax(mdp.get_actions(state), get_value)
 
             if action != policy[state_key]:
                 policy[state_key] = action

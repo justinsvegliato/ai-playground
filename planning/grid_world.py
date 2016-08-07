@@ -5,9 +5,11 @@ GRID_SIZE = 4
 GOAL_REWARD = 1
 NON_GOAL_REWARD = -0.04
 SLIP_PROBABILITY = 0.1
+
 EMPTY_SYMBOL = 0
 ROBOT_SYMBOL = 1
 SYMBOLS = ['O', 'R']
+
 ACTIONS = {
     'North': (0, 1),
     'East': (1, 0),

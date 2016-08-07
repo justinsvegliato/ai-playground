@@ -10,11 +10,8 @@ def main():
         domain.get_reward,
         domain.get_state_key
     )
-
     vi = VI(epsilon=0.1)
-
     policy = mdp.solve(solver=vi)
-    print policy
 
 if __name__ == '__main__':
     main()
