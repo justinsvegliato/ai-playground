@@ -1,10 +1,14 @@
 import random
 import numpy as np
 
-GRID_SIZE = 4
+GRID_SIZE = 5
+SLIP_PROBABILITY = 0.1
+
 GOAL_REWARD = 1
 NON_GOAL_REWARD = -0.04
-SLIP_PROBABILITY = 0.1
+
+GOAL_COST = 0
+NON_GOAL_COST = 0.04
 
 EMPTY_SYMBOL = 0
 ROBOT_SYMBOL = 1
@@ -68,12 +72,6 @@ def get_state_key(state):
             representation += str(element)
     return representation
 
-def display_state(state):
-    for row in np.array(state):
-        for element in row:
-            print SYMBOLS[element],
-        print
-
 def get_states():
     states = {}
 
@@ -112,3 +110,6 @@ def get_transition_probabilities(state, action):
 
 def get_reward(state):
     return GOAL_REWARD if np.array_equal(state, get_goal_state()) else NON_GOAL_REWARD
+
+def get_cost(state):
+    return GOAL_COST if np.array_equal(state, get_goal_state()) else NON_GOAL_COST 
