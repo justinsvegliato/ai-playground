@@ -21,7 +21,7 @@ def argmin(args, function):
 def get_random_variable(probability_distribution):
     selection = random.random()
     total = 0
-    for probability, variable in probability_distribution:
+    for variable, probability in probability_distribution:
         if total + probability >= selection:
             return variable
         total += probability

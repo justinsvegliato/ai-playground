@@ -1,7 +1,7 @@
 import random
 import numpy as np
 
-GRID_SIZE = 5
+GRID_SIZE = 6
 SLIP_PROBABILITY = 0.1
 
 GOAL_REWARD = 1
@@ -65,7 +65,7 @@ def get_successor_states(state):
         successor_states.append(get_successor_state(state, action))
     return successor_states
 
-def get_state_key(state):
+def get_key(state):
     representation = ''
     for row in np.array(state):
         for element in row:
@@ -79,11 +79,11 @@ def get_states():
     while len(frontier) > 0:
         current_state = frontier.pop()
 
-        current_state_key = get_state_key(current_state)
+        current_state_key = get_key(current_state)
         states[current_state_key] = current_state
 
         for state in get_successor_states(current_state):
-            successor_state_key = get_state_key(state)
+            successor_state_key = get_key(state)
             if successor_state_key in states:
                 continue
 
@@ -106,10 +106,13 @@ def get_actions(state):
     return actions
 
 def get_transition_probabilities(state, action):
-    return [(1 - SLIP_PROBABILITY, get_successor_state(state, action)), (SLIP_PROBABILITY, state)]
+    return [
+        (state, SLIP_PROBABILITY),
+        (get_successor_state(state, action), 1 - SLIP_PROBABILITY)
+    ]
 
 def get_reward(state):
     return GOAL_REWARD if np.array_equal(state, get_goal_state()) else NON_GOAL_REWARD
 
 def get_cost(state):
-    return GOAL_COST if np.array_equal(state, get_goal_state()) else NON_GOAL_COST 
+    return GOAL_COST if np.array_equal(state, get_goal_state()) else NON_GOAL_COST
