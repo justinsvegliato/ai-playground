@@ -42,7 +42,7 @@ def execute_pi_example(mdp):
     print 'The agent reached the goal in %s steps.' % steps
 
 def execute_rtdp_example(ssp):
-    rtdp = RTDP(trials=20)
+    rtdp = RTDP(trials=1)
 
     t0 = time.clock()
     policy = ssp.solve(solver=rtdp)

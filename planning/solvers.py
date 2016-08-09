@@ -24,20 +24,17 @@ def get_expected_value(mdp, action, state, values):
         expected_value += probability * values[key]
     return expected_value
 
-def get_new_value(mdp, state, values):
-    reward = mdp.get_reward(state)
-
+def get_expected_values(mdp, state, values):
     expected_values = []
     for action in mdp.get_actions(state):
         expected_value = get_expected_value(mdp, action, state, values)
         expected_values.append(expected_value)
+    return expected_values
 
-    return reward + mdp.gamma * max(expected_values)
-
-def get_best_action(mdp, state, values):
+def get_best_action(mdp, state, values, maximize=True):
     get_value = lambda action: get_expected_value(mdp, action, state, values)
     actions = mdp.get_actions(state)
-    return utils.argmax(actions, get_value)
+    return utils.argmax(actions, get_value) if maximize else utils.argmin(actions, get_value)
 
 def get_optimal_policy(mdp, values):
     policy = {}
@@ -50,9 +47,7 @@ def evaluate_policy(mdp, policy, values, iterations):
     for _i in range(iterations):
         for state in mdp.states:
             key = mdp.get_key(state)
-            reward = mdp.get_reward(state)
-            expected_value = get_expected_value(mdp, policy[key], state, values)
-            values[key] = reward + mdp.gamma * expected_value
+            values[key] = mdp.get_reward(state) + mdp.gamma * get_expected_value(mdp, policy[key], state, values)
     return values
 
 def get_improved_policy(mdp, policy, values):
@@ -76,12 +71,24 @@ def get_optimal_values(mdp, epsilon):
 
         for state in mdp.states:
             key = mdp.get_key(state)
-            new_values[key] = get_new_value(mdp, state, values)
+            new_values[key] = mdp.get_reward(state) + mdp.gamma * max(get_expected_values(mdp, state, values))
             delta = max(delta, abs(new_values[key] - values[key]))
             values = new_values
 
         if delta < epsilon * (1 - mdp.gamma) / mdp.gamma:
             return values
+
+def get_partial_policy(ssp, visited_states, values):
+    partial_policy = {}
+    for state in visited_states.values():
+        partial_values = {}
+        for action in ssp.get_actions(state):
+            partial_values[action] = ssp.get_cost(state) + get_expected_value(ssp, action, state, values)
+
+        key = ssp.get_key(state)
+        get_value = lambda action: partial_values[action]
+        partial_policy[key] = utils.argmin(ssp.get_actions(state), get_value)
+
 
 def value_iteration(mdp, epsilon):
     values = get_optimal_values(mdp, epsilon)
@@ -100,7 +107,8 @@ def policy_iteration(mdp, iterations):
 
         policy = new_policy
 
-# TODO: First, this code sucks. Second, and more importantly, I think it's wrong.
+# TODO The cost is a function of a state right now. It should be a function of an action and a state. This algorithm
+# needs work.
 def rtdp(ssp, trials):
     values = get_initial_values(ssp)
     visited_states = {}
@@ -109,44 +117,18 @@ def rtdp(ssp, trials):
         current_state = ssp.start_state
 
         while not np.array_equal(current_state, ssp.goal_state):
+            key = ssp.get_key(current_state)
+            visited_states[key] = current_state
+
             for state in ssp.states:
-                action_values = []
-                for action in ssp.get_actions(state):
-                    action_value = 0
-                    for new_state, probability in ssp.get_transition_probabilities(state, action):
-                        new_state_key = ssp.get_key(new_state)
-                        action_value += probability * values[new_state_key]
-                    action_value += ssp.get_cost(new_state) 
-                    action_values.append(action_value)
+                key = ssp.get_key(state)
+                values[key] = ssp.get_cost(state) + min(get_expected_values(ssp, state, values))
 
-                state_key = ssp.get_key(state)
-                values[state_key] = min(action_values)
-
-            current_state_key = ssp.get_key(current_state)
-            visited_states[current_state_key] = current_state
-
-            get_value = lambda action: get_expected_value(ssp, action, current_state, values)
-            best_action = utils.argmin(ssp.get_actions(current_state), get_value)
-
+            best_action = get_best_action(ssp, current_state, values, maximize=False)
             transition_probabilities = ssp.get_transition_probabilities(current_state, best_action)
             current_state = utils.get_random_variable(transition_probabilities)
 
-        current_state_key = ssp.get_key(current_state)
-        visited_states[current_state_key] = current_state
+        key = ssp.get_key(current_state)
+        visited_states[key] = current_state
 
-    policy = {}
-    for state in visited_states.values():
-        action_values = {} 
-        for action in ssp.get_actions(state):
-            action_value = 0 
-            for new_state, probability in ssp.get_transition_probabilities(state, action):
-                new_state_key = ssp.get_key(new_state)
-                action_value += probability * values[new_state_key]
-            action_value += ssp.get_cost(new_state) 
-            action_values[action] = action_value
-            
-        state_key = ssp.get_key(state)
-        get_value = lambda action: action_values[action] 
-        policy[state_key] = utils.argmin(ssp.get_actions(state), get_value)
-
-    return policy
+    return get_partial_policy(ssp, visited_states, values)
