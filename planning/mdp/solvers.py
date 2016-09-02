@@ -108,7 +108,7 @@ def policy_iteration(mdp, iterations):
         policy = new_policy
 
 # TODO The cost is a function of a state right now. It should be a function of an action and a state. This algorithm
-# needs work.
+# needs work and is probably wrong because I'm a bad coder.
 def rtdp(ssp, trials):
     values = get_initial_values(ssp)
     visited_states = {}
