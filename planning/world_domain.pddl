@@ -2,9 +2,9 @@
 
 (:types 
     robot - object
-    person - object
     deliverable - object
-    location - object)
+    location - object
+    person - deliverable)
     
 (:predicates (at ?x - object ?y - location)
              (has ?x - robot ?y - deliverable)
