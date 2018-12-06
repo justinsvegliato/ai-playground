@@ -4,6 +4,7 @@
     robot - object
     deliverable - object
     location - object
+    mail - deliverable
     person - deliverable)
     
 (:predicates (at ?x - object ?y - location)
