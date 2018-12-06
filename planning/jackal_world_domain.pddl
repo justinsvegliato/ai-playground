@@ -32,8 +32,8 @@
 (:action go-to
 :parameters (?x - robot ?loc-from - location ?loc-to - location)
 :precondition (and (not (at ?x ?loc-to))
-                    (at ?x ?loc-from)
-                    (connected ?loc-from ?loc-to))
+                   (at ?x ?loc-from)
+                   (connected ?loc-from ?loc-to))
 :effect (and (at ?x ?loc-to)
              (not (at ?x ?loc-from))
              (increase (total_distance_travelled) (distance ?loc-from ?loc-to))))
