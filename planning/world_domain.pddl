@@ -1,6 +1,7 @@
-﻿(define (domain jackal_world)
+﻿(define (domain world)
 
-(:types robot - object
+(:types 
+    robot - object
     person - object
     deliverable - object
     location - object)

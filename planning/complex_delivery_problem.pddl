@@ -1,6 +1,6 @@
-﻿(define (problem lgrc_delivery)
+﻿(define (problem complex_delivery)
 
-(:domain jackal_world)
+(:domain world)
 
 (:objects 
     jackal - robot

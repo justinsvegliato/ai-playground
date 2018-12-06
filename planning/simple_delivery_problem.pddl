@@ -1,11 +1,11 @@
 ﻿(define (problem simple_delivery)
 
-(:domain jackal_world)
+(:domain world)
 
 (:objects 
     jackal - robot
     package - deliverable
-    roomA roomB roomC - location 
+    roomA roomB roomC roomD - location 
 )
 
 (:init
