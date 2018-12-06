@@ -9,7 +9,7 @@
 )
 
 (:init
-    (at shlomo-mail joydeep-office)
+    (at shlomo-mail shlomo-office)
     (at joydeep-mail joydeep-office)
     (at lpr-mail lpr)
     (at amrl-mail amrl)
