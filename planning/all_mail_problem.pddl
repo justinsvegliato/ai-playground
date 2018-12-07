@@ -5,8 +5,7 @@
 (:objects 
     jackal - robot
     shlomo-mail joydeep-mail lpr-mail amrl-mail rbr-mail - mail
-    shlomo-office joydeep-office lpr amrl rbr lobby stairwellA stairwellB - location 
-)
+    shlomo-office joydeep-office lpr amrl rbr lobby stairwellA stairwellB - location)
 
 (:init
     (at shlomo-mail shlomo-office)
@@ -50,13 +49,11 @@
     (connected lpr lobby)
     (connected lpr amrl)
     
-    (= (total_distance_travelled) 0)
-)
+    (= (total_distance_travelled) 0))
 
 (:goal
     (and (forall (?x - mail) (has jackal ?x))
-         (at jackal amrl))
-)
+         (at jackal amrl)))
 
 (:metric minimize (total_distance_travelled))
 

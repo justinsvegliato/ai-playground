@@ -5,8 +5,7 @@
 (:objects 
     jackal - robot
     package - deliverable
-    roomA roomB roomC roomD - location 
-)
+    roomA roomB roomC roomD - location)
 
 (:init
     (at package roomA)
@@ -22,12 +21,10 @@
     (connected roomB roomC)
     (connected roomC roomB)
     
-    (= (total_distance_travelled) 0)
-)
+    (= (total_distance_travelled) 0))
 
 (:goal
-    (at package roomC)
-)
+    (at package roomC))
 
 (:metric minimize (total_distance_travelled))
 

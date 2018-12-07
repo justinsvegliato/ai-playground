@@ -6,8 +6,7 @@
     jackal - robot
     shlomo - person
     joydeep - person
-    shlomo-office joydeep-office lpr amrl rbr lobby stairwellA stairwellB - location 
-)
+    shlomo-office joydeep-office lpr amrl rbr lobby stairwellA stairwellB - location)
 
 (:init
     (at shlomo joydeep-office)
@@ -48,13 +47,11 @@
     (connected lpr lobby)
     (connected lpr amrl)
     
-    (= (total_distance_travelled) 0)
-)
+    (= (total_distance_travelled) 0))
 
 (:goal
     (and (at shlomo lpr)
-         (at joydeep lpr))
-)
+         (at joydeep lpr)))
 
 (:metric minimize (total_distance_travelled))
 
